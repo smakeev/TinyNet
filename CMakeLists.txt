@@ -20,7 +20,8 @@ endif()
 # Libraries: common + client + acceptor + server
 # ---------------------------------------------------------------------------
 add_library(tinynet_common
-    common/src/version.cpp)
+    common/src/version.cpp
+    common/src/socket.cpp)
 target_include_directories(tinynet_common PUBLIC common/include)
 add_library(tinynet::common ALIAS tinynet_common)
 
