@@ -47,6 +47,21 @@ TinyNet/
   it can be reused wherever incoming connections are needed.
 - **server** — full server layer built on top of `acceptor`.
 
+## Developer setup
+
+After cloning, enable the shared git hooks once:
+
+```sh
+make hooks
+```
+
+This points `core.hooksPath` at the tracked `.githooks/` directory. The
+`prepare-commit-msg` hook then prepends area tags to each commit message based
+on which top-level folders are staged: `[Common]`, `[Client]`, `[Acceptor]`,
+`[Server]`, and `[Base]` (root and everything outside the lib folders). For
+example, staging a change under `common/` and a root file yields
+`[Common] [Base] your message`.
+
 ## Building
 
 TinyNet uses CMake (C++20). The `Makefile` is a thin convenience wrapper.

@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+#
+# prepare-commit-msg: prepend "[Lib]" tags to the commit message based on which
+# top-level areas are staged for this commit.
+#
+#   common/     -> [Common]
+#   client/     -> [Client]
+#   acceptor/   -> [Acceptor]
+#   server/     -> [Server]
+#   anything else (root files, examples/, tests/, docs/, docker/, .github/, ...)
+#               -> [Base]   (root, above the lib folders)
+#
+# A tag is added only if something in that area was actually touched. Multiple
+# tags may appear, e.g. "[Common] [Base] my message".
+
+set -euo pipefail
+
+msg_file="$1"
+source="${2:-}"
+
+# Skip generated messages (merge/squash commits).
+case "$source" in
+    merge|squash) exit 0 ;;
+esac
+
+# Files staged for this commit.
+files=$(git diff --cached --name-only)
+[ -z "$files" ] && exit 0
+
+common=0; client=0; acceptor=0; server=0; base=0
+while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    case "$f" in
+        common/*)   common=1 ;;
+        client/*)   client=1 ;;
+        acceptor/*) acceptor=1 ;;
+        server/*)   server=1 ;;
+        *)          base=1 ;;
+    esac
+done <<EOF
+$files
+EOF
+
+tags=""
+[ "$common"   = 1 ] && tags="${tags}[Common] "
+[ "$client"   = 1 ] && tags="${tags}[Client] "
+[ "$acceptor" = 1 ] && tags="${tags}[Acceptor] "
+[ "$server"   = 1 ] && tags="${tags}[Server] "
+[ "$base"     = 1 ] && tags="${tags}[Base] "
+
+[ -z "$tags" ] && exit 0
+
+# Don't prepend again if the message already starts with one of our tags
+# (e.g. on --amend or a reworded rebase).
+first_line=$(head -n1 "$msg_file")
+case "$first_line" in
+    "[Common]"*|"[Client]"*|"[Acceptor]"*|"[Server]"*|"[Base]"*) exit 0 ;;
+esac
+
+# Prepend the tags to the top of the message, preserving everything else.
+tmp=$(mktemp)
+printf '%s' "$tags" > "$tmp"
+cat "$msg_file" >> "$tmp"
+mv "$tmp" "$msg_file"
