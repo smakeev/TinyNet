@@ -80,3 +80,66 @@ This produces three demo executables:
 ## License
 
 [MIT](LICENSE)
+
+
+PLAN:
+TinyNet Roadmap
+
+* ✅ 1. Initial project skeleton
+* ✅ 2. Split architecture: common / client / acceptor / server
+* ✅ 3. Socket RAII wrapper
+
+⸻
+
+* ⬜ 4. Endpoint
+* ⬜ 5. TCP Transport Strategy
+* ⬜ 6. Transport Factory
+* ⬜ 7. Client: TCP connect / disconnect
+* ⬜ 8. Acceptor: bind / listen
+* ⬜ 9. Acceptor: accept one client
+* ⬜ 10. Server skeleton: accept loop
+
+⸻
+
+* ⬜ 11. Send raw bytes
+* ⬜ 12. Receive raw bytes
+* ⬜ 13. Packet header
+* ⬜ 14. Packet framing
+* ⬜ 15. Packet parser
+* ⬜ 16. Command enum
+* ⬜ 17. Command dispatcher
+
+⸻
+
+* ⬜ 18. Console chat: single client
+* ⬜ 19. Console chat: multiple clients
+* ⬜ 20. Broadcast
+* ⬜ 21. User names
+* ⬜ 22. Join / Leave notifications
+* ⬜ 23. Private messages
+
+⸻
+
+* ⬜ 24. Threads
+* ⬜ 25. Connection manager
+* ⬜ 26. Graceful disconnect
+* ⬜ 27. Heartbeat / Ping
+* ⬜ 28. Timeouts
+* ⬜ 29. Logging
+
+⸻
+
+* ⬜ 30. UDP Transport Strategy
+* ⬜ 31. UDP client demo
+* ⬜ 32. UDP acceptor/server demo
+* ⬜ 33. UDP console chat
+* ⬜ 34. TCP vs UDP comparison
+
+⸻
+
+* ⬜ 35. Unit tests
+* ⬜ 36. Docker demo
+* ⬜ 37. GitHub Actions CI
+* ⬜ 38. README polish for C++ vacancies
+* ⬜ 39. Architecture docs
+* ⬜ 40. Final cleanup / tags / release
