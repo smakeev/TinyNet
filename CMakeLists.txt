@@ -17,7 +17,7 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 # ---------------------------------------------------------------------------
-# Libraries: common + client + server
+# Libraries: common + client + acceptor + server
 # ---------------------------------------------------------------------------
 add_library(tinynet_common
     common/src/version.cpp)
@@ -30,17 +30,29 @@ target_include_directories(tinynet_client PUBLIC client/include)
 target_link_libraries(tinynet_client PUBLIC tinynet_common)
 add_library(tinynet::client ALIAS tinynet_client)
 
+# Reusable incoming-connection layer (bind/listen/accept), shared by the
+# backend server and mobile LAN-host mode.
+add_library(tinynet_acceptor
+    acceptor/src/acceptor.cpp)
+target_include_directories(tinynet_acceptor PUBLIC acceptor/include)
+target_link_libraries(tinynet_acceptor PUBLIC tinynet_common)
+add_library(tinynet::acceptor ALIAS tinynet_acceptor)
+
+# Full server layer, built on top of the acceptor.
 add_library(tinynet_server
     server/src/server.cpp)
 target_include_directories(tinynet_server PUBLIC server/include)
-target_link_libraries(tinynet_server PUBLIC tinynet_common)
+target_link_libraries(tinynet_server PUBLIC tinynet_common tinynet_acceptor)
 add_library(tinynet::server ALIAS tinynet_server)
 
 # ---------------------------------------------------------------------------
 # Demo executables
 # ---------------------------------------------------------------------------
-add_executable(tinynet_server_demo examples/server/main.cpp)
-target_link_libraries(tinynet_server_demo PRIVATE tinynet::server)
-
 add_executable(tinynet_client_demo examples/client/main.cpp)
 target_link_libraries(tinynet_client_demo PRIVATE tinynet::client)
+
+add_executable(tinynet_acceptor_demo examples/acceptor/main.cpp)
+target_link_libraries(tinynet_acceptor_demo PRIVATE tinynet::acceptor)
+
+add_executable(tinynet_server_demo examples/server/main.cpp)
+target_link_libraries(tinynet_server_demo PRIVATE tinynet::server)

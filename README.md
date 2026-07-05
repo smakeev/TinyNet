@@ -27,15 +27,25 @@ There is no real networking implementation yet.
 
 ```
 TinyNet/
-├── common/     # shared code (version, framing, dispatch, ...)
-├── client/     # TCP client library
-├── server/     # TCP server library
-├── examples/   # console demos (client + server)
+├── common/     # shared low-level primitives
+├── client/     # outgoing connections
+├── acceptor/   # reusable incoming connection layer (backend + LAN-host mode)
+├── server/     # full server layer built on acceptor
+├── examples/   # console demos (client + acceptor + server)
 ├── tests/      # unit / integration tests
 ├── docker/     # Docker demo assets
 ├── docs/       # documentation
 └── .github/    # CI workflows
 ```
+
+## Planned architecture
+
+- **common** — shared low-level primitives.
+- **client** — outgoing connections.
+- **acceptor** — reusable incoming connection layer for backend and LAN-host
+  mode. It owns bind/listen/accept and is intentionally not the full server, so
+  it can be reused wherever incoming connections are needed.
+- **server** — full server layer built on top of `acceptor`.
 
 ## Building
 
@@ -61,10 +71,11 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 cmake --build build
 ```
 
-This produces two demo executables:
+This produces three demo executables:
 
-- `tinynet_server_demo` (from `examples/server/main.cpp`)
 - `tinynet_client_demo` (from `examples/client/main.cpp`)
+- `tinynet_acceptor_demo` (from `examples/acceptor/main.cpp`)
+- `tinynet_server_demo` (from `examples/server/main.cpp`)
 
 ## License
 
