@@ -1,19 +1,62 @@
-CMakeLists.txt.user
+# -----------------------------------------------------------------------------
+# TinyNet .gitignore
+# CMake-based C++20 project, generated for Xcode on macOS.
+#
+# Ignores build output and generated tooling files only.
+# Source, CMakeLists.txt, Makefile, Dockerfile, README.md, LICENSE, docs and
+# the common/client/server/examples/tests/.github trees are all tracked.
+# -----------------------------------------------------------------------------
+
+# --- Build directories -------------------------------------------------------
+build/
+cmake-build-*/
+out/
+
+# --- Generated Xcode projects / workspaces -----------------------------------
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+*.xcuserstate
+DerivedData/
+
+# --- CMake temporary / generated files ---------------------------------------
 CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
+CMakeFiles/
+CMakeScripts/
+CMakeUserPresets.json
 cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
-_deps
-CMakeUserPresets.json
+CMakeLists.txt.user
+Testing/
+_deps/
 
-# CLion
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#cmake-build-*
+# --- macOS -------------------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# --- IDE / editor local files ------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# --- Compiled objects / binaries ---------------------------------------------
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+
+# --- Logs --------------------------------------------------------------------
+*.log
+logs/
