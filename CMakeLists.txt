@@ -21,7 +21,8 @@ endif()
 # ---------------------------------------------------------------------------
 add_library(tinynet_common
     common/src/version.cpp
-    common/src/socket.cpp)
+    common/src/socket.cpp
+    common/src/endpoint.cpp)
 target_include_directories(tinynet_common PUBLIC common/include)
 add_library(tinynet::common ALIAS tinynet_common)
 
