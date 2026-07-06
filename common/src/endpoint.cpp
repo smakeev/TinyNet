@@ -1,5 +1,8 @@
 #include "tinynet/endpoint.hpp"
 
+#include <arpa/inet.h>
+#include <netinet/in.h>
+
 #include <utility>
 
 namespace tinynet {
@@ -29,6 +32,31 @@ Endpoint Endpoint::localhostIpv4(uint16_t port) {
 
 Endpoint Endpoint::localhostIpv6(uint16_t port) {
     return ipv6("::1", port);
+}
+
+std::optional<SockAddr> Endpoint::toSockAddr() const noexcept {
+    switch (addressFamily_) {
+        case AF_INET: {
+            sockaddr_in addr{};
+            addr.sin_family = AF_INET;
+            addr.sin_port = htons(port_);
+            if (::inet_pton(AF_INET, address_.c_str(), &addr.sin_addr) != 1) {
+                return std::nullopt;
+            }
+            return SockAddr(addr);
+        }
+        case AF_INET6: {
+            sockaddr_in6 addr{};
+            addr.sin6_family = AF_INET6;
+            addr.sin6_port = htons(port_);
+            if (::inet_pton(AF_INET6, address_.c_str(), &addr.sin6_addr) != 1) {
+                return std::nullopt;
+            }
+            return SockAddr(addr);
+        }
+        default:
+            return std::nullopt;
+    }
 }
 
 }  // namespace tinynet

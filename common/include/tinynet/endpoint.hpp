@@ -1,18 +1,21 @@
 #pragma once
 
 #include <cstdint>
+#include <optional>
 #include <string>
 
 #include <sys/socket.h>
 
+#include "tinynet/sock_addr.hpp"
+
 namespace tinynet {
 
 // Immutable value type describing a network endpoint: *where* to connect or
-// bind. It carries an address string, a port and an address family, but never
-// performs any networking (no socket/connect/bind/listen/accept and no
-// sockaddr conversion). Those responsibilities belong to future networking
-// code, which can rely on Endpoint to encapsulate the address + port + family
-// triple instead of passing raw strings and AF_INET/AF_INET6 constants around.
+// bind. It carries an address string, a port and an address family, and can
+// produce the matching POSIX SockAddr on demand. It performs no networking
+// itself (no socket/connect/bind/listen/accept) -- it only encapsulates the
+// address + port + family triple so networking code never has to pass raw
+// strings and AF_INET/AF_INET6 constants (or bare sockaddr structs) around.
 class Endpoint {
 public:
     // Constructs an IPv4 endpoint (address family AF_INET).
@@ -41,6 +44,12 @@ public:
 
     // Returns the address family, either AF_INET or AF_INET6.
     int addressFamily() const noexcept { return addressFamily_; }
+
+    // Builds the POSIX SockAddr for this endpoint. Parses the address string
+    // with inet_pton and converts the port to network byte order. Returns
+    // std::nullopt if the address string fails to parse or the family is
+    // unsupported. Never throws.
+    std::optional<SockAddr> toSockAddr() const noexcept;
 
 private:
     // Private: endpoints are created through the static factory methods.

@@ -21,5 +21,14 @@ int main() {
               << (socket.isValid() ? "valid" : "invalid") << " (fd "
               << socket.nativeHandle() << ")\n";
 
+    // Convert the endpoint into a POSIX sockaddr. Future connect() will pass
+    // addr->data() / addr->size() to ::connect; here we only build it.
+    if (const auto addr = endpoint.toSockAddr()) {
+        std::cout << "Built SockAddr: family=" << addr->addressFamily()
+                  << ", size=" << addr->size() << " bytes\n";
+    } else {
+        std::cout << "Failed to build SockAddr for endpoint.\n";
+    }
+
     return 0;
 }
