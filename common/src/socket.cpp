@@ -1,6 +1,5 @@
 #include "tinynet/socket.hpp"
 
-#include <sys/socket.h>
 #include <unistd.h>
 
 namespace tinynet {
@@ -35,14 +34,6 @@ int Socket::release() noexcept {
     int fd = fd_;
     fd_ = kInvalidFd;
     return fd;
-}
-
-Socket Socket::createTcp() noexcept {
-    return Socket(::socket(AF_INET, SOCK_STREAM, 0));
-}
-
-Socket Socket::createUdp() noexcept {
-    return Socket(::socket(AF_INET, SOCK_DGRAM, 0));
 }
 
 }  // namespace tinynet

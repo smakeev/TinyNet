@@ -35,14 +35,6 @@ public:
     // Relinquishes ownership without closing; returns the fd.
     int release() noexcept;
 
-    // Creates an AF_INET / SOCK_STREAM (TCP) socket.
-    // Returns an invalid Socket on failure.
-    static Socket createTcp() noexcept;
-
-    // Creates an AF_INET / SOCK_DGRAM (UDP) socket.
-    // Returns an invalid Socket on failure.
-    static Socket createUdp() noexcept;
-
 private:
     int fd_ = kInvalidFd;
 };
