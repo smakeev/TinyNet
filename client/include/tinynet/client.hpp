@@ -8,6 +8,8 @@ namespace tinynet {
 //
 // No networking is implemented yet; this type only exposes a short banner so
 // the client library and demos have something concrete to link against.
+// Client-specific connect/disconnect logic will be added later, on top of the
+// sockets produced by common's SocketFactory.
 class Client {
 public:
     Client() = default;
