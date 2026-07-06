@@ -97,64 +97,80 @@ This produces three demo executables:
 [MIT](LICENSE)
 
 
-PLAN:
-TinyNet Roadmap
+# Roadmap
 
-* ✅ 1. Initial project skeleton
-* ✅ 2. Split architecture: common / client / acceptor / server
-* ✅ 3. Socket RAII wrapper
+## Phase 1 — Foundation
 
-⸻
+- ✅ 1. Initial project skeleton
+- ✅ 2. Project architecture (common / client / acceptor / server)
+- ✅ 3. Socket RAII wrapper
+- ✅ 4. Endpoint abstraction
+- ✅ 5. SocketFactory
 
-* ⬜ 4. Endpoint
-* ⬜ 5. TCP Transport Strategy
-* ⬜ 6. Transport Factory
-* ⬜ 7. Client: TCP connect / disconnect
-* ⬜ 8. Acceptor: bind / listen
-* ⬜ 9. Acceptor: accept one client
-* ⬜ 10. Server skeleton: accept loop
+Next:
 
-⸻
+- ⬜ 6. Endpoint → sockaddr conversion (common)
+- ⬜ 7. Client transport strategy (client + common)
+- ⬜ 8. Acceptor transport strategy (acceptor + common)
 
-* ⬜ 11. Send raw bytes
-* ⬜ 12. Receive raw bytes
-* ⬜ 13. Packet header
-* ⬜ 14. Packet framing
-* ⬜ 15. Packet parser
-* ⬜ 16. Command enum
-* ⬜ 17. Command dispatcher
+---
 
-⸻
+## Phase 2 — Networking
 
-* ⬜ 18. Console chat: single client
-* ⬜ 19. Console chat: multiple clients
-* ⬜ 20. Broadcast
-* ⬜ 21. User names
-* ⬜ 22. Join / Leave notifications
-* ⬜ 23. Private messages
+- ⬜ 9. TCP client connect / disconnect (client + common)
+- ⬜ 10. TCP bind / listen (acceptor + common)
+- ⬜ 11. TCP accept (acceptor + common)
+- ⬜ 12. Server accept loop (server + acceptor + common)
 
-⸻
+---
 
-* ⬜ 24. Threads
-* ⬜ 25. Connection manager
-* ⬜ 26. Graceful disconnect
-* ⬜ 27. Heartbeat / Ping
-* ⬜ 28. Timeouts
-* ⬜ 29. Logging
+## Phase 3 — Data Transport
 
-⸻
+- ⬜ 13. Send raw bytes (client + acceptor + common)
+- ⬜ 14. Receive raw bytes (client + acceptor + common)
+- ⬜ 15. Packet header (common)
+- ⬜ 16. Packet framing (common)
+- ⬜ 17. Packet parser (common)
+- ⬜ 18. Command dispatcher (common)
 
-* ⬜ 30. UDP Transport Strategy
-* ⬜ 31. UDP client demo
-* ⬜ 32. UDP acceptor/server demo
-* ⬜ 33. UDP console chat
-* ⬜ 34. TCP vs UDP comparison
+---
 
-⸻
+## Phase 4 — Console Chat
 
-* ⬜ 35. Unit tests
-* ⬜ 36. Docker demo
-* ⬜ 37. GitHub Actions CI
-* ⬜ 38. README polish for C++ vacancies
-* ⬜ 39. Architecture docs
-* ⬜ 40. Final cleanup / tags / release
+- ⬜ 19. Single client chat (examples)
+- ⬜ 20. Multi-client chat (server + client + examples)
+- ⬜ 21. Broadcast (server)
+- ⬜ 22. User names (server + client)
+- ⬜ 23. Join / Leave notifications (server)
+- ⬜ 24. Private messages (server)
+
+---
+
+## Phase 5 — Reliability
+
+- ⬜ 25. Threads (server)
+- ⬜ 26. Connection manager (server)
+- ⬜ 27. Graceful disconnect (client + server)
+- ⬜ 28. Heartbeat / Ping (common)
+- ⬜ 29. Timeouts (server)
+- ⬜ 30. Logging (common)
+
+---
+
+## Phase 6 — UDP
+
+- ⬜ 31. UDP client transport (client + common)
+- ⬜ 32. UDP acceptor transport (acceptor + common)
+- ⬜ 33. UDP client/server demo (examples)
+- ⬜ 34. UDP console chat (examples)
+- ⬜ 35. TCP vs UDP comparison (docs + examples)
+
+---
+
+## Phase 7 — Production
+
+- ⬜ 36. Unit tests (tests)
+- ⬜ 37. Docker demo (docker)
+- ⬜ 38. GitHub Actions (CI)
+- ⬜ 39. Documentation
+- ⬜ 40. Release v0.1
