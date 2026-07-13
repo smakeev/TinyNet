@@ -1,21 +1,39 @@
 #pragma once
 
+#include <memory>
 #include <string_view>
+
+#include "tinynet/i_client_transport.hpp"
 
 namespace tinynet {
 
-// Placeholder for the upcoming TinyNet TCP client.
+class Endpoint;
+
+// Thin facade over a client transport strategy.
 //
-// No networking is implemented yet; this type only exposes a short banner so
-// the client library and demos have something concrete to link against.
-// Client-specific connect/disconnect logic will be added later, on top of the
-// sockets produced by common's SocketFactory.
+// Client owns an IClientTransport (a TcpClientTransport by default) and simply
+// delegates connect/disconnect/isConnected to it. All socket handling lives in
+// the transport; Client stays a stable, transport-agnostic entry point. No
+// networking is performed yet -- the transport methods are still placeholders.
 class Client {
 public:
-    Client() = default;
+    // Constructs a Client backed by a TCP transport.
+    Client();
 
     // Returns a human-readable description of the client component.
     std::string_view banner() const noexcept;
+
+    // Connects to the endpoint through the underlying transport.
+    bool connect(const Endpoint& endpoint);
+
+    // Disconnects the underlying transport.
+    void disconnect() noexcept;
+
+    // Returns true if the underlying transport is connected.
+    bool isConnected() const noexcept;
+
+private:
+    std::unique_ptr<IClientTransport> transport_;
 };
 
 }  // namespace tinynet

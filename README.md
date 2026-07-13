@@ -109,8 +109,8 @@ This produces three demo executables:
 
 Next:
 
-- ⬜ 6. Endpoint → sockaddr conversion (common)
-- ⬜ 7. Client transport strategy (client + common)
+- ✅ 6. Endpoint → sockaddr conversion (common)
+- ✅ 7. Client transport strategy (client + common)
 - ⬜ 8. Acceptor transport strategy (acceptor + common)
 
 ---

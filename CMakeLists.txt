@@ -29,7 +29,8 @@ target_include_directories(tinynet_common PUBLIC common/include)
 add_library(tinynet::common ALIAS tinynet_common)
 
 add_library(tinynet_client
-    client/src/client.cpp)
+    client/src/client.cpp
+    client/src/tcp_client_transport.cpp)
 target_include_directories(tinynet_client PUBLIC client/include)
 target_link_libraries(tinynet_client PUBLIC tinynet_common)
 add_library(tinynet::client ALIAS tinynet_client)
