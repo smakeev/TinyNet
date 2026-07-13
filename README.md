@@ -111,7 +111,7 @@ Next:
 
 - ✅ 6. Endpoint → sockaddr conversion (common)
 - ✅ 7. Client transport strategy (client + common)
-- ⬜ 8. Acceptor transport strategy (acceptor + common)
+- ✅ 8. Acceptor transport strategy (acceptor + common)
 
 ---
 
