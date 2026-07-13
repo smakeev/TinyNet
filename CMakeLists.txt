@@ -38,7 +38,8 @@ add_library(tinynet::client ALIAS tinynet_client)
 # Reusable incoming-connection layer (bind/listen/accept), shared by the
 # backend server and mobile LAN-host mode.
 add_library(tinynet_acceptor
-    acceptor/src/acceptor.cpp)
+    acceptor/src/acceptor.cpp
+    acceptor/src/tcp_acceptor_transport.cpp)
 target_include_directories(tinynet_acceptor PUBLIC acceptor/include)
 target_link_libraries(tinynet_acceptor PUBLIC tinynet_common)
 add_library(tinynet::acceptor ALIAS tinynet_acceptor)
